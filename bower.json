@@ -1,0 +1,13 @@
+{
+  "name": "angular-global-messages",
+  "version": "0.0.0",
+  "authors": [
+    "R. Cijvat <robin.cijvat@monetdbsolutions.com>"
+  ],
+  "description": "Messaging system for showing webapp-wide messages",
+  "main": "index.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*"
+  ]
+}
