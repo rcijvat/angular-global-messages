@@ -1,0 +1,60 @@
+.fixed-alerts .ng-enter,
+.fixed-alerts .ng-leave
+{
+    -webkit-transition: 400ms;
+    -moz-transition: 400ms;
+    -o-transition: 400ms;
+    transition: 400ms;
+}
+
+.fixed-alerts .ng-leave.ng-leave-active,
+.fixed-alerts .ng-enter {
+    opacity: 0;
+}
+
+.fixed-alerts .ng-enter.ng-enter-active,
+.fixed-alerts .ng-leave {
+    opacity: 1;
+}
+.fixed-alerts {
+    position: fixed;
+    top: 10px;
+    width: 100%;
+    z-index: 2000;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.fixed-alerts .alert {
+    margin: 0 auto;
+    width: 80%;
+    -moz-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
+    -o-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
+    opacity: .95;
+    -webkit-transition: 400ms;
+    -moz-transition: 400ms;
+    -o-transition: 400ms;
+    transition: 400ms;
+    margin-bottom: 20px;
+}
+
+.fixed-alerts .alert:hover {
+    opacity: 1;
+}
+
+.fixed-alerts .glyphicon {
+    cursor: pointer;
+    margin-right: -20px;
+}
+
+.msg .details-link {
+    cursor: pointer;
+    border-bottom: 1px dashed #999;
+}
+
+.msg .alert-details {
+    font-weight: normal;
+}

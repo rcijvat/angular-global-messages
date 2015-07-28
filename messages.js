@@ -58,48 +58,28 @@ angular.module("messages", [])
 
  	return {
 		restrict: "A",
-		templateUrl: "partials/messages.html",
+		template: "<div class=\"fixed-alerts\">\n" +
+                  " <div ng-repeat=\"msg in msgs\"\n" +
+                  "      class=\"alert alert-{{msg.type}} alert-dismissable msg\"\n" +
+                  "      role=\"alert\">\n" +
+                  "     <span class=\"glyphicon glyphicon-remove pull-right\" ng-click=\"close(msg)\"></span>\n" +
+                  "     <div ng-repeat=\"s in msg.msgs track by $index\" ng-mousemove=\"cancelTimeout(msg); align();\" ng-mouseleave=\"resetTimeout(msg)\">\n" +
+                  "         <span ng-bind=\"s.msg\"></span>\n" +
+                  "         <span ng-if=\"s.details\">\n" +
+                  "             <span class=\"details-link\" ng-click=\"showDetails=!showDetails; align();\">\n" +
+                  "                 <span ng-bind=\"showDetails?'Hide':'Show'\"></span> details\n" +
+                  "             </span>\n" +
+                  "             <span ng-if=\"showDetails\" class=\"alert-details\">\n" +
+                  "                 <br />\n" +
+                  "                 <span ng-bind=\"s.details\"></span>\n" +
+                  "             </span>\n" +
+                  "         </span>\n" +
+                  "     </div>\n" +
+                  " </div>\n" +
+                  "</div>",
 		link: function(scope) {
 			var id = 0; // used to give each message a unique id
 			scope.msgs = [];
-			message.addListener(function(type, msgs) {
-				var msg = {
-					id: id++,
-					type: type,
-					msgs: msgs,
-                    timeout: null
-				};
-				// if an equivalent message group is already in the messages, remove this old one
-				var oldPos = -1;
-				scope.msgs.some(function(oldMsg, i) {
-					if(msg.type == oldMsg.type && msg.msgs.length == oldMsg.msgs.length) {
-						var eq;
-						msg.msgs.every(function(m) {
-							return (eq = (oldMsg.msgs.indexOf(m) > -1));
-						});
-						if(eq) {
-							// all messages were equal
-							oldPos = i;
-							return true;
-						}
-					}
-					return false;
-				});
-				if(oldPos > -1) {
-					scope.msgs.splice(oldPos, 1);
-				}
-
-                scope.resetTimeout(msg);
-
-				scope.msgs.push(msg);
-
-				// and at last, remove all other non-success messages if this is a success
-				if(type == "success") {
-					scope.msgs = scope.msgs.filter(function(msg) {
-						return msg.type == "success";
-					});
-				}
-			});
 
             scope.cancelTimeout = function(msg) {
                 if(msg.timeout) $timeout.cancel(msg.timeout);
@@ -119,6 +99,45 @@ angular.module("messages", [])
 					return false;
 				});
 			};
+
+            message.addListener(function(type, msgs) {
+                var msg = {
+                    id: id++,
+                    type: type,
+                    msgs: msgs,
+                    timeout: null
+                };
+                // if an equivalent message group is already in the messages, remove this old one
+                var oldPos = -1;
+                scope.msgs.some(function(oldMsg, i) {
+                    if(msg.type == oldMsg.type && msg.msgs.length == oldMsg.msgs.length) {
+                        var eq;
+                        msg.msgs.every(function(m) {
+                            return (eq = (oldMsg.msgs.indexOf(m) > -1));
+                        });
+                        if(eq) {
+                            // all messages were equal
+                            oldPos = i;
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+                if(oldPos > -1) {
+                    scope.msgs.splice(oldPos, 1);
+                }
+
+                scope.resetTimeout(msg);
+
+                scope.msgs.push(msg);
+
+                // and at last, remove all other non-success messages if this is a success
+                if(type == "success") {
+                    scope.msgs = scope.msgs.filter(function(msg) {
+                        return msg.type == "success";
+                    });
+                }
+            });
 		}
 	}	
 }]);
