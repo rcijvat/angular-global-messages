@@ -101,31 +101,24 @@ angular.module("messages", [])
 			};
 
             message.addListener(function(type, msgs) {
+                // if an equivalent message group is already in the messages, reset its timeout
+                // and do not add this one
+                var exists = false;
+                scope.msgs.some(function(oldMsg) {
+                    if(oldMsg.type == type && angular.equals(msgs, oldMsg.msgs)) {
+                        scope.resetTimeout(oldMsg);
+                        exists = true;
+                        return true;
+                    }
+                    return false;
+                });
+                if(exists) return;
                 var msg = {
                     id: id++,
                     type: type,
                     msgs: msgs,
                     timeout: null
                 };
-                // if an equivalent message group is already in the messages, remove this old one
-                var oldPos = -1;
-                scope.msgs.some(function(oldMsg, i) {
-                    if(msg.type == oldMsg.type && msg.msgs.length == oldMsg.msgs.length) {
-                        var eq;
-                        msg.msgs.every(function(m) {
-                            return (eq = (oldMsg.msgs.indexOf(m) > -1));
-                        });
-                        if(eq) {
-                            // all messages were equal
-                            oldPos = i;
-                            return true;
-                        }
-                    }
-                    return false;
-                });
-                if(oldPos > -1) {
-                    scope.msgs.splice(oldPos, 1);
-                }
 
                 scope.resetTimeout(msg);
 
