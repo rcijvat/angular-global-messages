@@ -1,21 +1,3 @@
-.fixed-alerts .ng-enter,
-.fixed-alerts .ng-leave
-{
-    -webkit-transition: 400ms;
-    -moz-transition: 400ms;
-    -o-transition: 400ms;
-    transition: 400ms;
-}
-
-.fixed-alerts .ng-leave.ng-leave-active,
-.fixed-alerts .ng-enter {
-    opacity: 0;
-}
-
-.fixed-alerts .ng-enter.ng-enter-active,
-.fixed-alerts .ng-leave {
-    opacity: 1;
-}
 .fixed-alerts {
     position: fixed;
     top: 10px;
@@ -33,12 +15,12 @@
     -webkit-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
     -o-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
     box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
-    opacity: .95;
+    opacity: .8;
+    margin-bottom: 20px;
     -webkit-transition: 400ms;
     -moz-transition: 400ms;
     -o-transition: 400ms;
     transition: 400ms;
-    margin-bottom: 20px;
 }
 
 .fixed-alerts .alert:hover {

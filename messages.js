@@ -1,4 +1,4 @@
-angular.module("messages", [])
+angular.module("messages", ["ngAnimate"])
 
 .factory("message", function() {
 	var errMem = [];
@@ -50,20 +50,24 @@ angular.module("messages", [])
 		function($timeout, message) {
 
 	var timeouts = {
-		"danger": 10000,
-		"success": 5000,
-		"warning": 5000,
-		"info": 5000
+		"danger": 10,
+		"success": 5,
+		"warning": 5,
+		"info": 5
 	};
 
  	return {
 		restrict: "A",
+        scope: true,
 		template: "<div class=\"fixed-alerts\">\n" +
                   " <div ng-repeat=\"msg in msgs\"\n" +
                   "      class=\"alert alert-{{msg.type}} alert-dismissable msg\"\n" +
                   "      role=\"alert\">\n" +
-                  "     <span class=\"glyphicon glyphicon-remove pull-right\" ng-click=\"close(msg)\"></span>\n" +
-                  "     <div ng-repeat=\"s in msg.msgs track by $index\" ng-mousemove=\"cancelTimeout(msg); align();\" ng-mouseleave=\"resetTimeout(msg)\">\n" +
+                  "     <div class=\"pull-right\" ng-mousemove=\"cancelTimeouts(); align();\" ng-mouseleave=\"resetTimeouts()\">\n" +
+                  "         <span ng-style=\"{opacity: msg.countdown > 0 ? 1 : 0}\" ng-bind=\"'('+msg.countdown+')'\"></span>\n" +
+                  "         <span class=\"glyphicon glyphicon-remove\" ng-click=\"close(msg)\"></span>\n" +
+                  "     </div>\n" +
+                  "     <div ng-repeat=\"s in msg.msgs track by $index\" ng-mousemove=\"cancelTimeouts(); align();\" ng-mouseleave=\"resetTimeouts()\">\n" +
                   "         <span ng-bind=\"s.msg\"></span>\n" +
                   "         <span ng-if=\"s.details\">\n" +
                   "             <span class=\"details-link\" ng-click=\"showDetails=!showDetails; align();\">\n" +
@@ -81,13 +85,31 @@ angular.module("messages", [])
 			var id = 0; // used to give each message a unique id
 			scope.msgs = [];
 
-            scope.cancelTimeout = function(msg) {
+            function cancelTimeout(msg) {
                 if(msg.timeout) $timeout.cancel(msg.timeout);
+                msg.countdown = 0;
+            }
+
+            function resetTimeout(msg) {
+                cancelTimeout(msg);
+                msg.countdown = timeouts[msg.type];
+                var fn = function() {
+                    if(msg.countdown === 1) {
+                        scope.close(msg);
+                    } else {
+                        --msg.countdown;
+                    }
+                    msg.timeout = $timeout(fn, 1000);
+                };
+                msg.timeout = $timeout(fn, 1000);
+            }
+
+            scope.cancelTimeouts = function() {
+                scope.msgs.forEach(cancelTimeout);
             };
 
-            scope.resetTimeout = function(msg) {
-                scope.cancelTimeout(msg);
-                msg.timeout = $timeout(function() { scope.close(msg); }, timeouts[msg.type]);
+            scope.resetTimeouts = function() {
+                scope.msgs.forEach(resetTimeout);
             };
 
 			scope.close = function(msg) {
@@ -106,7 +128,7 @@ angular.module("messages", [])
                 var exists = false;
                 scope.msgs.some(function(oldMsg) {
                     if(oldMsg.type == type && angular.equals(msgs, oldMsg.msgs)) {
-                        scope.resetTimeout(oldMsg);
+                        resetTimeout(oldMsg);
                         exists = true;
                         return true;
                     }
@@ -117,10 +139,11 @@ angular.module("messages", [])
                     id: id++,
                     type: type,
                     msgs: msgs,
-                    timeout: null
+                    countdown: false,
+                    timeout: 0
                 };
 
-                scope.resetTimeout(msg);
+                resetTimeout(msg);
 
                 scope.msgs.push(msg);
 

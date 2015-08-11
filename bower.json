@@ -1,6 +1,6 @@
 {
   "name": "angular-global-messages",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "authors": [
     "R. Cijvat <robin.cijvat@monetdbsolutions.com>"
   ],
@@ -15,5 +15,8 @@
   ],
   "dependencies": {
     "bootstrap": "~3.3.5"
+  },
+  "resolutions": {
+    "angular": "~1.3.1"
   }
 }
