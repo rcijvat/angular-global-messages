@@ -1,16 +1,13 @@
 .fixed-alerts {
     position: fixed;
-    top: 10px;
-    width: 100%;
+    top: 70px;
+    right: 20px;
+    width: 30%;
+    min-width: 300px;
     z-index: 2000;
-    font-size: 1.1em;
-    font-weight: bold;
-    text-align: center;
 }
 
 .fixed-alerts .alert {
-    margin: 0 auto;
-    width: 80%;
     -moz-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
     -webkit-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
     -o-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
@@ -29,7 +26,21 @@
 
 .fixed-alerts .glyphicon {
     cursor: pointer;
-    margin-right: -20px;
+}
+
+.msg {
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: left;
+}
+
+.msg .preline {
+    white-space: pre-line;
+}
+
+.msg .msg-ctrls {
+    position: relative;
+    right: -20px;
 }
 
 .msg .details-link {
@@ -39,4 +50,9 @@
 
 .msg .alert-details {
     font-weight: normal;
+}
+
+.msg-archive .filter {
+    display: inline-block;
+    margin: 0 20px;
 }
