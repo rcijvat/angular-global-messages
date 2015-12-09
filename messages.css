@@ -12,19 +12,14 @@
     -webkit-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
     -o-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
     box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
-    opacity: .9;
     margin-bottom: 20px;
-    -webkit-transition: 400ms;
-    -moz-transition: 400ms;
-    -o-transition: 400ms;
-    transition: 400ms;
 }
 
 .fixed-alerts .alert:hover {
     opacity: 1;
 }
 
-.fixed-alerts .glyphicon {
+.fixed-alerts .fa {
     cursor: pointer;
 }
 
@@ -32,6 +27,22 @@
     font-size: 1.1em;
     font-weight: bold;
     text-align: left;
+    opacity: .9;
+}
+
+.msg.ng-enter, .msg.ng-leave {
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
+    -o-transition: .5s;
+    transition: .5s;
+}
+
+.msg.ng-enter, .msg.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+
+.msg.ng-enter.ng-enter-active, .msg.ng-leave {
+    opacity: .9;
 }
 
 .msg .preline {
@@ -56,3 +67,4 @@
     display: inline-block;
     margin: 0 20px;
 }
+

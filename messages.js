@@ -1,4 +1,4 @@
-angular.module("messages", [])
+angular.module("messages", ["ui.bootstrap", "ngAnimate"])
 
     .factory("message", function() {
         var listeners = [];
@@ -69,23 +69,22 @@ angular.module("messages", [])
                 restrict: "A",
                 scope: true,
                 template: "<div class=\"fixed-alerts\">\n" +
-                " <div ng-repeat=\"msg in msgs\"\n" +
+                " <div data-ng-repeat=\"msg in msgs\"\n" +
                 "      class=\"alert alert-{{msg.type}} alert-dismissable msg\"\n" +
                 "      role=\"alert\"\n" +
-                "      ng-mousemove=\"cancelTimeouts()\"\n" +
-                "      ng-mouseleave=\"resetTimeouts()\">\n" +
+                "      data-ng-mousemove=\"cancelTimeouts()\"\n" +
+                "      data-ng-mouseleave=\"resetTimeouts()\">\n" +
                 "     <div class=\"pull-right msg-ctrls\">\n" +
-                "         <span ng-style=\"{opacity: msg.countdown > 0 ? 1 : 0}\" ng-bind=\"'('+msg.countdown+')'\"></span>\n" +
-                "         <span class=\"glyphicon glyphicon-remove\" ng-click=\"close(msg); resetTimeouts();\"></span>\n" +
+                "         <span class=\"fa fa-close\" data-ng-click=\"close(msg); resetTimeouts();\"></span>\n" +
                 "     </div>\n" +
-                "     <span class=\"preline\" ng-bind=\"msg.msg\"></span>\n" +
-                "     <span ng-if=\"msg.details\">\n" +
-                "         <span class=\"details-link\" ng-click=\"showDetails=!showDetails\">\n" +
-                "             <span ng-bind=\"showDetails?'Hide':'Show'\"></span> details\n" +
+                "     <span class=\"preline\" data-ng-bind=\"msg.msg\"></span>\n" +
+                "     <span data-ng-if=\"msg.details\">\n" +
+                "         <span class=\"details-link\" data-ng-click=\"showDetails=!showDetails\">\n" +
+                "             <span data-ng-bind=\"showDetails?'Hide':'Show'\"></span> details\n" +
                 "         </span>\n" +
-                "         <span collapse=\"!showDetails\" class=\"alert-details\">\n" +
+                "         <span data-uib-collapse=\"!showDetails\" class=\"alert-details\">\n" +
                 "             <br />\n" +
-                "             <span ng-bind=\"msg.details\" class=\"preline\"></span>\n" +
+                "             <span data-ng-bind=\"msg.details\" class=\"preline\"></span>\n" +
                 "         </span>\n" +
                 "     </span>\n" +
                 " </div>\n" +
