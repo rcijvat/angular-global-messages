@@ -16,6 +16,7 @@
   "dependencies": {
     "angular-bootstrap": "~0.14.1",
     "font-awesome": "~4.3.0",
-    "angular-animate": "~1.4.7"
+    "angular-animate": "~1.4.7",
+    "datetime-filters": "~0.0.3"
   }
 }
