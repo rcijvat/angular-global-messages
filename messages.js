@@ -1,4 +1,4 @@
-angular.module("messages", ["ui.bootstrap", "ngAnimate"])
+angular.module("messages", ["ui.bootstrap", "ngAnimate", "rc-datetime"])
 
     .factory("message", function() {
         var listeners = [];
